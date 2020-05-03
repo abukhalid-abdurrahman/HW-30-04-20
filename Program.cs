@@ -30,7 +30,7 @@ namespace Day_16
                 lock (locker)
                 {
                     Console.ResetColor();
-                    Console.SetCursorPosition(cursorLeft + chainsList[index].X, Console.CursorTop + chainsList[index].Y);
+                    Console.SetCursorPosition(cursorLeft + chainsList[index].X, + i);
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     if (i > chainsList[index].Symbols.Length - 2)
                     {
@@ -41,9 +41,7 @@ namespace Day_16
                         Console.ForegroundColor = ConsoleColor.Green;
                     }
                     Console.Write(chainsList[index].Symbols[i]);
-                    Thread.Sleep(50);
                     Console.ResetColor();
-                    Console.CursorTop = i;
                 }
             }
         }
@@ -51,7 +49,7 @@ namespace Day_16
         {
             int counter = 0;
             object locker = new object();
-            while (counter < 40)
+            while (counter < 25)
             {
                 lock (locker)
                 {
@@ -82,13 +80,14 @@ namespace Day_16
             Thread chainGenerator = new Thread(ChainGenerator);
             chainGenerator.Start();
             chainGenerator.Join();
-            Thread[] chainsTask = new Thread[40];
+            Thread[] chainsTask = new Thread[25];
             for (int i = 0; i < chainsTask.Length; i++, index++)
             {
                 chainsTask[i] = new Thread(OutChain);
                 chainsTask[i].Start();
                 chainsTask[i].Join();
             }
+            Console.Read();
         }
     }
 }
